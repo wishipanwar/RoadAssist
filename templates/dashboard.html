@@ -1,1 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoadAssist - User Dashboard</title>
+
+```
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f4f7fb;
+        color: #222;
+    }
+
+    header {
+        background: #0d6efd;
+        color: white;
+        padding: 18px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    .logout {
+        background: white;
+        color: #0d6efd;
+        padding: 9px 16px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 900px;
+        margin: 30px auto;
+    }
+
+    .welcome {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+    }
+
+    .card h2 {
+        margin-bottom: 18px;
+        color: #0d6efd;
+    }
+
+    .problem-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 15px;
+    }
+
+    .problem-btn {
+        border: none;
+        padding: 18px 10px;
+        border-radius: 10px;
+        background: #eef4ff;
+        color: #0d6efd;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .problem-btn:hover {
+        background: #0d6efd;
+        color: white;
+    }
+
+    .problem-btn.selected {
+        background: #0d6efd;
+        color: white;
+    }
+
+    .location-box {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f1f8ff;
+        border-radius: 8px;
+    }
+
+    .location-btn {
+        margin-top: 12px;
+        border: none;
+        background: #198754;
+        color: white;
+        padding: 12px 18px;
+        border-radius: 7px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .request-btn {
+        width: 100%;
+        margin-top: 20px;
+        padding: 15px;
+        border: none;
+        border-radius: 8px;
+        background: #dc3545;
+        color: white;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .request-btn:hover {
+        background: #bb2d3b;
+    }
+
+    .status-box {
+        padding: 18px;
+        border-radius: 10px;
+        background: #f8f9fa;
+        line-height: 1.8;
+    }
+
+    .status {
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    .pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .accepted {
+        background: #d1e7dd;
+        color: #0f5132;
+    }
+
+    .completed {
+        background: #cff4fc;
+        color: #055160;
+    }
+
+    #message {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 7px;
+        display: none;
+    }
+
+    .success {
+        background: #d1e7dd;
+        color: #0f5132;
+    }
+
+    .error {
+        background: #f8d7da;
+        color: #842029;
+    }
+
+    .feedback-section {
+        display: none;
+    }
+
+    .stars {
+        display: flex;
+        gap: 8px;
+        margin: 15px 0;
+    }
+
+    .star {
+        font-size: 40px;
+        color: #ccc;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .star.active {
+        color: gold;
+    }
+
+    textarea {
+        width: 100%;
+        min-height: 100px;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        resize: vertical;
+        font-size: 15px;
+    }
+
+    .feedback-btn {
+        margin-top: 12px;
+        background: #0d6efd;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 7px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .map-link {
+        display: inline-block;
+        margin-top: 10px;
+        background: #198754;
+        color: white;
+        text-decoration: none;
+        padding: 9px 14px;
+        border-radius: 6px;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+    <h1>🚗 RoadAssist</h1>
+    <a href="/logout" class="logout">Logout</a>
+</header>
+
+<div class="container">
+
+```
+<div class="welcome">
+    <h2>Welcome, {{ user_name }} 👋</h2>
+    <p>Need roadside vehicle assistance? Select your problem below.</p>
+</div>
+
+<div class="card">
+    <h2>🔧 Select Vehicle Problem</h2>
+
+    <div class="problem-grid">
+
+        <button class="problem-btn" onclick="selectProblem(this, 'Flat Tyre')">
+            🛞 Flat Tyre
+        </button>
+
+        <button class="problem-btn" onclick="selectProblem(this, 'Battery Problem')">
+            🔋 Battery Problem
+        </button>
+
+        <button class="problem-btn" onclick="selectProblem(this, 'Engine Problem')">
+            ⚙️ Engine Problem
+        </button>
+
+        <button class="problem-btn" onclick="selectProblem(this, 'Fuel Empty')">
+            ⛽ Fuel Empty
+        </button>
+
+        <button class="problem-btn" onclick="selectProblem(this, 'Accident')">
+            🚨 Accident
+        </button>
+
+        <button class="problem-btn" onclick="selectProblem(this, 'Other')">
+            🔧 Other
+        </button>
+
+    </div>
+
+    <div class="location-box">
+        <strong>📍 Your Location</strong>
+
+        <p id="locationText">
+            Location not detected yet.
+        </p>
+
+        <button class="location-btn" onclick="getLocation()">
+            📍 Get My Location
+        </button>
+    </div>
+
+    <button class="request-btn" onclick="submitRequest()">
+        🚨 Request Roadside Help
+    </button>
+
+    <div id="message"></div>
+</div>
+
+<div class="card">
+    <h2>📋 Request Status</h2>
+
+    <div id="statusBox" class="status-box">
+        No request submitted yet.
+    </div>
+</div>
+
+<div class="card feedback-section" id="feedbackSection">
+
+    <h2>⭐ Rate Our Service</h2>
+
+    <p>Please rate the roadside assistance you received.</p>
+
+    <div class="stars">
+        <span class="star" onclick="setRating(1)">★</span>
+        <span class="star" onclick="setRating(2)">★</span>
+        <span class="star" onclick="setRating(3)">★</span>
+        <span class="star" onclick="setRating(4)">★</span>
+        <span class="star" onclick="setRating(5)">★</span>
+    </div>
+
+    <p id="ratingText">Select a rating.</p>
+
+    <textarea id="comment" placeholder="Write your feedback here..."></textarea>
+
+    <button class="feedback-btn" onclick="submitFeedback()">
+        Submit Feedback
+    </button>
+
+    <div id="feedbackMessage"></div>
+
+</div>
+```
+
+</div>
+
+<script>
+
+let selectedProblem = "";
+let latitude = null;
+let longitude = null;
+let currentRequestId = null;
+let selectedRating = 0;
+
+
+function selectProblem(button, problem) {
+
+    document.querySelectorAll(".problem-btn").forEach(function(btn) {
+        btn.classList.remove("selected");
+    });
+
+    button.classList.add("selected");
+
+    selectedProblem = problem;
+}
+
+
+function getLocation() {
+
+    const locatio
 
