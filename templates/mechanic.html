@@ -1,1 +1,262 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>RoadAssist - Mechanic Dashboard</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f4f7fb;
+        color: #222;
+    }
+
+    header {
+        background: #212529;
+        color: white;
+        padding: 18px 7%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    .home-btn {
+        background: white;
+        color: #212529;
+        text-decoration: none;
+        padding: 9px 15px;
+        border-radius: 6px;
+        font-weight: bold;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1000px;
+        margin: 30px auto;
+    }
+
+    .heading {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .heading h2 {
+        color: #0d6efd;
+        margin-bottom: 8px;
+    }
+
+    .request-card {
+        background: white;
+        padding: 25px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    }
+
+    .request-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+    }
+
+    .request-id {
+        font-size: 20px;
+        font-weight: bold;
+        color: #0d6efd;
+    }
+
+    .status {
+        padding: 7px 12px;
+        border-radius: 6px;
+        font-weight: bold;
+    }
+
+    .pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .accepted {
+        background: #d1e7dd;
+        color: #0f5132;
+    }
+
+    .completed {
+        background: #cff4fc;
+        color: #055160;
+    }
+
+    .details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .detail {
+        background: #f8f9fa;
+        padding: 13px;
+        border-radius: 7px;
+    }
+
+    .detail strong {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    .problem {
+        font-size: 19px;
+        font-weight: bold;
+        color: #dc3545;
+    }
+
+    .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    button {
+        border: none;
+        padding: 12px 18px;
+        border-radius: 7px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .accept-btn {
+        background: #198754;
+        color: white;
+    }
+
+    .accept-btn:hover {
+        background: #157347;
+    }
+
+    .complete-btn {
+        background: #0d6efd;
+        color: white;
+    }
+
+    .complete-btn:hover {
+        background: #0b5ed7;
+    }
+
+    .map-btn {
+        background: #6f42c1;
+        color: white;
+        text-decoration: none;
+        padding: 12px 18px;
+        border-radius: 7px;
+        font-weight: bold;
+        display: inline-block;
+    }
+
+    .message {
+        background: white;
+        padding: 25px;
+        text-align: center;
+        border-radius: 12px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        color: #666;
+    }
+
+    .error {
+        background: #f8d7da;
+        color: #842029;
+    }
+
+    .success-message {
+        background: #d1e7dd;
+        color: #0f5132;
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            width: 94%;
+        }
+
+        header {
+            padding: 15px;
+        }
+
+        header h1 {
+            font-size: 20px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+
+```
+<h1>🔧 RoadAssist Mechanic</h1>
+
+<a href="/" class="home-btn">
+    🏠 Home
+</a>
+```
+
+</header>
+
+<div class="container">
+
+```
+<div class="heading">
+
+    <h2>Customer Breakdown Requests</h2>
+
+    <p>
+        Accept pending requests and complete accepted services.
+    </p>
+
+</div>
+
+
+<div id="message" style="display:none;"></div>
+
+
+<div id="requests">
+
+    <div class="message">
+        Loading requests...
+    </div>
+
+</div>
+```
+
+</div>
+
+<script>
+
+async function loadRequests() {
+
+    const container = document.getElementById("requests");
+
+    try {
+
+        const response = await fetch(
 
