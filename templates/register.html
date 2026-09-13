@@ -1,1 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>RoadAssist - Register</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0d6efd, #212529);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .register-box {
+        width: 100%;
+        max-width: 480px;
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .logo {
+        text-align: center;
+        font-size: 30px;
+        margin-bottom: 5px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #212529;
+        margin-bottom: 8px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #777;
+        margin-bottom: 25px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 17px;
+        border: 1px solid #ccc;
+        border-radius: 7px;
+        font-size: 15px;
+        outline: none;
+    }
+
+    input:focus,
+    select:focus {
+        border-color: #0d6efd;
+    }
+
+    button {
+        width: 100%;
+        padding: 13px;
+        background: #0d6efd;
+        color: white;
+        border: none;
+        border-radius: 7px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #0b5ed7;
+    }
+
+    .error {
+        background: #f8d7da;
+        color: #842029;
+        padding: 12px;
+        border-radius: 7px;
+        margin-bottom: 18px;
+        text-align: center;
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 20px;
+        color: #555;
+    }
+
+    .login-link a {
+        color: #0d6efd;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .home-link {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        color: #555;
+        text-decoration: none;
+    }
+
+    .home-link:hover,
+    .login-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="register-box">
+
+```
+<div class="logo">🚗</div>
+
+<h1>RoadAssist</h1>
+
+<p class="subtitle">
+    Create your account
+</p>
+
+
+{% if error %}
+    <div class="error">
+        {{ error }}
+    </div>
+{% endif %}
+
+
+<form action="/register" method="POST">
+
+    <label for="name">
+        Full Name
+    </label>
+
+    <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Enter your full name"
+        required
+    >
+
+
+    <label for="phone">
+        Phone Number
+    </label>
+
+    <input
+        type="tel"
+        id="phone"
+        name="phone"
+        placeholder="Enter your phone number"
+        required
+    >
+
+
+    <label for="email">
+        Email
+    </label>
+
+    <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Enter your email"
+        required
+    >
+
+
+    <label for="password">
+        Password
+    </label>
+
+    <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Create a password"
+        required
+    >
+
+
+    <label for="vehicle_no">
+        Vehicle Number
+    </label>
+
+    <input
+        type="text"
+        id="vehicle_no"
+        name="vehicle_no"
+        placeholder="Example: UP80AB1234"
+        required
+    >
+
+
+    <label for="vehicle_type">
+        Vehicle Type
+    </label>
+
+    <select
+        id="vehicle_type"
+        name="vehicle_type"
+        required
+    >
+
+        <option value="">
+            -- Select Vehicle Type --
+        </option>
+
+        <option value="Bike">
+            🏍️ Bike
+        </option>
+
+        <option value="Scooter">
+            🛵 Scooter
+        </option>
+
+        <option value="Car">
+            🚗 Car
+        </option>
+
+        <option value="Auto Rickshaw">
+            🛺 Auto Rickshaw
+        </option>
+
+        <option value="Van">
+            🚐 Van
+        </option>
+
+        <option value="Bus">
+            🚌 Bus
+        </option>
+
+        <option value="Truck">
+            🚚 Truck
+        </option>
+
+        <option value="Other">
+            🚘 Other
+        </option>
+
+    </select>
+
+
+    <button type="submit">
+        Create Account
+    </button>
+
+</form>
+
+
+<div class="login-link">
+
+    Already have an account?
+
+    <a href="/login">
+        Login
+    </a>
+
+</div>
+
+
+<a href="/" class="home-link">
+    ← Back to Home
+</a>
+```
+
+</div>
+
+</body>
+</html>
 
